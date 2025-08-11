@@ -1,0 +1,27 @@
+# Ignore node_modules
+node_modules
+
+# Ignore build outputs
+dist
+build
+out
+
+# Ignore lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore environment files
+.env
+.env.* 
+
+# Ignore coverage and logs
+coverage
+*.log
+
+# Ignore compiled assets
+*.min.js
+*.min.css
+
+# Ignore all markdown in docs folder (example)
+docs/**/*.md
