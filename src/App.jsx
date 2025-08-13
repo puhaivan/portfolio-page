@@ -1,8 +1,31 @@
+import { useState, useEffect } from 'react';
 import avatar from '/images/avatar.png';
 
 const App = function () {
+  const [darkMode, setDarkMode] = useState(
+    typeof window !== 'undefined' && localStorage.getItem('theme') === 'dark'
+  );
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
   return (
-    <div className="min-h-screen w-full p-4 md:p-6 lg:p-8 overflow-hidden bg-gradient-to-br from-[rgb(189,165,205)] via-[rgb(118,67,152)] to-[rgb(92,65,194)]">
+    <div className="min-h-screen w-full p-4 md:p-6 lg:p-8 overflow-hidden bg-gradient-to-br from-[rgb(189,165,205)] via-[rgb(118,67,152)] to-[rgb(92,65,194)] relative">
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="fixed bottom-4 left-4 z-50 px-3 py-2 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/80 text-black dark:text-white backdrop-blur-lg shadow-sm transition"
+      >
+        {darkMode ? '☀️ Light' : '🌙 Dark'}
+      </button>
+
       <div className="relative z-10 max-w-7xl mx-auto min-h-[calc(100vh-4rem)] md:h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 md:gap-6 h-full">
           <div className="col-span-1 lg:col-span-2 flex flex-col gap-4 md:gap-6 overflow-hidden">
@@ -48,7 +71,7 @@ const App = function () {
                   </p>
                 </div>
 
-                <div className="mt-auto border-top border-black/5 dark:border-white/10 pt-4">
+                <div className="mt-auto border-t border-black/5 dark:border-white/10 pt-4">
                   <div className="grid grid-cols-2 gap-4 text-xs mb-4">
                     <div>
                       <h3 className="flex items-center gap-1.5 font-medium text-neutral-500 dark:text-neutral-400 mb-1.5">
@@ -228,8 +251,8 @@ const App = function () {
               </div>
               <div className="col-span-1 md:col-span-5 min-h-0 overflow-hidden">
                 <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100">
-                  <div className="position: relative; width: 100%; height: 100%; overflow: hidden; pointer-events: auto; touch-action: none;">
-                    <div className="width:100%;height:100%"></div>
+                  <div className="relative w-full h-full overflow-hidden pointer-events-auto touch-auto">
+                    <div className="w-full h-full"></div>
                   </div>
                 </div>
               </div>
