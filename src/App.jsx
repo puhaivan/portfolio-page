@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import avatar from '/images/avatar.png';
+import ProjectSlider from './components/ProjectSlider';
 
 const App = function () {
   const [darkMode, setDarkMode] = useState(
@@ -18,7 +19,7 @@ const App = function () {
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen w-full p-4 md:p-6 lg:p-8 overflow-hidden bg-gradient-to-br from-[rgb(189,165,205)] via-[rgb(118,67,152)] to-[rgb(92,65,194)] relative">
+    <div className="min-h-screen w-full p-4 md:p-6 lg:p-8 overflow-hidden transition-background duration-1000 ease-in-out bg-[rgb(250,248,245)] dark:bg-[rgb(25,25,25)]">
       <button
         onClick={() => setDarkMode(!darkMode)}
         className="fixed bottom-4 left-4 z-50 px-3 py-2 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/80 text-black dark:text-white backdrop-blur-lg shadow-sm transition"
@@ -240,17 +241,19 @@ const App = function () {
 
           <div className="col-span-1 lg:col-span-4 grid grid-rows-[auto_auto] lg:grid-rows-[minmax(0,3fr)_minmax(0,1fr)] gap-4 md:gap-6 overflow-hidden">
             <div className="row-span-1 w-full h-[50vh] lg:h-full overflow-hidden">
-              <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full overflow-hidden !p-0 text-neutral-900 dark:text-neutral-100"></div>
+              <div className=" bg-neutral-100/80 dark:bg-neutral-800/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300 rounded-3xl  h-full overflow-hidden !p-0 text-neutral-900 dark:text-neutral-100">
+                <ProjectSlider />
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
               <div className="col-span-1 md:col-span-7 min-h-0 overflow-hidden">
-                <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full p-6 md:p-8 flex flex-col text-neutral-900 dark:text-neutral-100">
+                <div className="bg-neutral-100/80 dark:bg-neutral-800/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full p-6 md:p-8 flex flex-col text-neutral-900 dark:text-neutral-100">
                   <div></div>
                   <div></div>
                 </div>
               </div>
               <div className="col-span-1 md:col-span-5 min-h-0 overflow-hidden">
-                <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100">
+                <div className="bg-neutral-100/80 dark:bg-neutral-800/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100">
                   <div className="relative w-full h-full overflow-hidden pointer-events-auto touch-auto">
                     <div className="w-full h-full"></div>
                   </div>
