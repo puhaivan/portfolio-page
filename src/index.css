@@ -1,3 +1,36 @@
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant immersive (&:where(.immersive, .immersive *));
+
+/* === Base Light/Dark === */
+:root {
+  --bg-base: rgb(250, 248, 245); /* light */
+  --text-color: #111;
+}
+
+:root.dark {
+  --bg-base: rgb(25, 25, 25); /* dark */
+  --text-color: #f5f5f5;
+}
+
+/* === Immersive === */
+
+:root.immersive[data-project='0'] {
+  --bg-base: linear-gradient(to bottom right, #1e3c72, #2a5298);
+}
+:root.immersive[data-project='1'] {
+  --bg-base: linear-gradient(to bottom right, #4b1051, #434343);
+}
+:root.immersive[data-project='2'] {
+  --bg-base: linear-gradient(to bottom right, #ff6a00, #ee0979);
+}
+
+/* === Apply globally === */
+html,
+body,
+#root {
+  background: var(--bg-base);
+  color: var(--text-color);
+  transition: background 0.6s ease, color 0.6s ease;
+}

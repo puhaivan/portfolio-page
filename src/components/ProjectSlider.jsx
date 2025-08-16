@@ -1,33 +1,12 @@
 import { useEffect, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, LayoutGrid, X, ChevronLeft, Globe, Monitor, Smartphone } from 'lucide-react';
+import { ArrowUpRight, LayoutGrid, X, ChevronLeft, Globe, Smartphone } from 'lucide-react';
 import { SiGooglechrome, SiSafari, SiFirefoxbrowser, SiApple } from 'react-icons/si';
 import { FaWindows } from 'react-icons/fa';
-import { createPortal } from 'react-dom';
+import Popover from './Popover';
 
-function Popover({ isVisible, content, x, y }) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!isVisible || !mounted) return null;
-
-  return createPortal(
-    <div
-      className="z-[999] pointer-events-none px-2 py-1 text-[11px] rounded-md text-white bg-black/70 dark:bg-white dark:text-black shadow-md"
-      style={{
-        position: 'fixed',
-        left: x,
-        top: y,
-        transform: 'translate(-50%, 12px)',
-      }}
-    >
-      {content}
-    </div>,
-    document.body
-  );
-}
-
-export default function ProjectSlider() {
+export default function ProjectSlider({ theme, platformPopover, setPlatformPopover }) {
   const projects = [
     {
       title: 'Promtify AIG',
@@ -61,98 +40,70 @@ export default function ProjectSlider() {
     desktop: { Icon: FaWindows, label: 'Windows' },
   };
 
-  const SWIPE_THRESHOLD_PX = 60;
-
+  // --- state
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
   const [isShowAll, setIsShowAll] = useState(false);
   const [isShowNudgeHint, setIsShowNudgeHint] = useState(true);
-  const [dragState, setDragState] = useState({
-    startX: 0,
-    dx: 0,
-    isDragging: false,
-    usedMouse: false,
-  });
 
-  const [platformPopover, setPlatformPopover] = useState({
-    isVisible: false,
-    content: '',
-    x: 0,
-    y: 0,
-  });
+  // slide variants
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? '100%' : '-100%',
+      opacity: 0,
+      position: 'absolute',
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      position: 'relative',
+      transition: { duration: 0.5, ease: 'easeInOut' },
+    },
+    exit: (dir) => ({
+      x: dir < 0 ? '100%' : '-100%',
+      opacity: 0,
+      position: 'absolute',
+      transition: { duration: 0.5, ease: 'easeInOut' },
+    }),
+  };
 
+  useEffect(() => {
+    if (theme === 'immersive') {
+      document.documentElement.setAttribute('data-project', currentIndex);
+    }
+  }, [theme, currentIndex]);
+
+  // auto-hide nudge arrow
   useEffect(() => {
     const timer = setTimeout(() => setIsShowNudgeHint(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  const goNext = () => setCurrentIndex((i) => (i + 1) % projects.length);
-  const goPrev = () => setCurrentIndex((i) => (i - 1 + projects.length) % projects.length);
-
-  // Touch
-  const onTouchStart = (e) =>
-    setDragState({ startX: e.touches[0].clientX, dx: 0, isDragging: true, usedMouse: false });
-  const onTouchMove = (e) => {
-    if (!dragState.isDragging) return;
-    setDragState((d) => ({ ...d, dx: e.touches[0].clientX - d.startX }));
-  };
-  const onTouchEnd = () => {
-    if (!dragState.isDragging) return;
-    if (dragState.dx > SWIPE_THRESHOLD_PX) goPrev();
-    else if (dragState.dx < -SWIPE_THRESHOLD_PX) goNext();
-    setDragState({ startX: 0, dx: 0, isDragging: false, usedMouse: false });
-  };
-
-  // Mouse
-  const onMouseDown = (e) =>
-    setDragState({ startX: e.clientX, dx: 0, isDragging: true, usedMouse: true });
-  const onMouseMove = (e) => {
-    if (!dragState.isDragging || !dragState.usedMouse) return;
-    setDragState((d) => ({ ...d, dx: e.clientX - d.startX }));
-  };
-  const endMouseDrag = () => {
-    if (!dragState.isDragging) return;
-    if (dragState.dx > SWIPE_THRESHOLD_PX) goPrev();
-    else if (dragState.dx < -SWIPE_THRESHOLD_PX) goNext();
-    setDragState({ startX: 0, dx: 0, isDragging: false, usedMouse: false });
+  // navigation helpers
+  const paginate = (dir) => {
+    setDirection(dir);
+    setCurrentIndex((prev) => (prev + dir + projects.length) % projects.length);
   };
 
   // Platform popover
   const handlePlatformMouseEnter = (e, key) => {
     const def = platformIcons[key] || { label: key };
-    setPlatformPopover({
-      isVisible: true,
-      content: def.label,
-      x: e.clientX,
-      y: e.clientY,
-    });
+    setPlatformPopover({ isVisible: true, content: def.label, x: e.clientX, y: e.clientY });
   };
-  const handlePlatformMouseMove = (e) => {
+  const handlePlatformMouseMove = (e) =>
     setPlatformPopover((p) => ({ ...p, x: e.clientX, y: e.clientY }));
-  };
-  const handlePlatformMouseLeave = () => {
-    setPlatformPopover((p) => ({ ...p, isVisible: false }));
-  };
+  const handlePlatformMouseLeave = () => setPlatformPopover((p) => ({ ...p, isVisible: false }));
 
   return (
-    <div
-      className="relative w-full h-full cursor-grab active:cursor-grabbing group/nav"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={endMouseDrag}
-      onMouseLeave={endMouseDrag}
-      onDragStart={(e) => e.preventDefault()}
-    >
-      {/* Hover hints (visual only) */}
-      <div className="absolute left-2 md:left-4 bottom-2 md:bottom-4 z-20 pointer-events-none transition-opacity duration-300 opacity-0 group-hover/nav:opacity-100">
-        <div className="px-3 py-1 rounded-full bg-black/40 dark:bg-white/10  text-white dark:text-neutral-200 text-[10px] md:text-xs font-medium whitespace-nowrap">
+    <div className="relative w-full h-full group/nav overflow-hidden">
+      {/* Hover hints */}
+      <div className="absolute left-2 md:left-4 bottom-2 md:bottom-4 z-20 pointer-events-none opacity-0 group-hover/nav:opacity-100 transition-opacity">
+        <div className="px-3 py-1 rounded-full bg-black/40 dark:bg-white/10 immersive:bg-white/10 text-white dark:text-neutral-200 immersive:text-neutral-200 text-[10px] md:text-xs font-medium">
           Slide Right
         </div>
       </div>
-      <div className="absolute right-2 md:right-4 bottom-2 md:bottom-4 z-20 pointer-events-none transition-opacity duration-300 opacity-0 group-hover/nav:opacity-100">
-        <div className="px-3 py-1 rounded-full bg-black/40 dark:bg-white/10  text-white dark:text-neutral-200 text-[10px] md:text-xs font-medium whitespace-nowrap">
+      <div className="absolute right-2 md:right-4 bottom-2 md:bottom-4 z-20 pointer-events-none opacity-0 group-hover/nav:opacity-100 transition-opacity">
+        <div className="px-3 py-1 rounded-full bg-black/40 dark:bg-white/10 immersive:bg-white/10 text-white dark:text-neutral-200 immersive:text-neutral-200 text-[10px] md:text-xs font-medium">
           Slide Left
         </div>
       </div>
@@ -176,119 +127,113 @@ export default function ProjectSlider() {
       </AnimatePresence>
 
       {/* Slides */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="absolute inset-0 flex transition-transform duration-300 ease-out will-change-transform"
-          style={{
-            transform: `translateX(calc(${-currentIndex * 100}% + ${
-              dragState.isDragging ? dragState.dx : 0
-            }px))`,
-          }}
-        >
-          {projects.map((p, i) => (
-            <article key={p.title} className="min-w-full min-h-full flex flex-col ">
-              {/* Image area — transparent, no inner rounding; outer card clips */}
-              <div className="w-full  overflow-hidden rounded-tl-3xl shadow-lg">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="w-full h-full  inset-0 object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  style={{ imageRendering: 'auto' }}
-                />
+      <div className="w-full h-full relative">
+        <AnimatePresence custom={direction} initial={false}>
+          <motion.article
+            key={currentIndex}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            drag="x"
+            whileDrag={{ scale: 0.97, opacity: 0.85 }}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(e, { offset, velocity }) => {
+              const swipe = offset.x + velocity.x * 0.5;
+              if (swipe < -100) paginate(1);
+              else if (swipe > 100) paginate(-1);
+            }}
+            className="w-full h-full flex flex-col"
+          >
+            {/* Image */}
+            <div className="w-full overflow-hidden rounded-tl-3xl shadow-lg">
+              <img
+                src={projects[currentIndex].image}
+                alt={projects[currentIndex].title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Info panel */}
+            <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100 bg-neutral-100/80 dark:bg-neutral-800/50 immersive:bg-neutral-800/50 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
+              <div className="flex items-start justify-between mb-3 gap-4">
+                <div>
+                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-1">
+                    {projects[currentIndex].title}
+                  </h3>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm font-medium text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400">
+                    {projects[currentIndex].year}
+                  </span>
+                </div>
+                <a
+                  href={projects[currentIndex].url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-shrink-0 text-xs text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 hover:text-black dark:hover:text-white immersive:hover:text-white transition-colors flex items-center gap-1 group bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full font-medium whitespace-nowrap"
+                >
+                  View Project <ArrowUpRight className="w-3 h-3" />
+                </a>
               </div>
 
-              {/* Info panel — transparent, inherit text, no rounding, subtle divider */}
-              <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 bg-neutral-100/80 dark:bg-neutral-800/80 border-black/5 dark:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
-                <div className="flex items-start justify-between mb-3 gap-4">
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-1">
-                      {p.title}
-                    </h3>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10 backdrop-blur-sm font-medium text-neutral-600 dark:text-neutral-400">
-                      {p.year}
-                    </span>
-                  </div>
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-shrink-0 text-xs text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors flex items-center gap-1 group bg-black/10 dark:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full font-medium whitespace-nowrap"
+              <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 mb-4 leading-relaxed max-w-2xl">
+                {projects[currentIndex].description}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {projects[currentIndex].tech.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400"
                   >
-                    View Project <ArrowUpRight className="w-3 h-3" />
-                  </a>
-                </div>
+                    {tech}
+                  </span>
+                ))}
+              </div>
 
-                <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4 leading-relaxed max-w-2xl">
-                  {p.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {p.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {Array.isArray(p.platforms) && p.platforms.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-black/5 dark:border-white/10">
-                    <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 mr-1">
+              {Array.isArray(projects[currentIndex].platforms) &&
+                projects[currentIndex].platforms.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-black/5 dark:border-white/10 immersive:border-white/10">
+                    <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 mr-1">
                       Platforms:
                     </span>
-
-                    {p.platforms.map((raw) => {
+                    {projects[currentIndex].platforms.map((raw) => {
                       const key = String(raw).toLowerCase();
                       const entry = platformIcons[key];
-                      const Icon = entry?.Icon || Globe; // <- fallback to Globe
-                      const label = entry?.label || raw;
+                      const Icon = entry?.Icon || Globe;
 
                       return (
                         <div
                           key={raw}
-                          className="flex items-center justify-center p-1.5 bg-black/5 dark:bg-white/5 rounded-md cursor-default"
-                          onMouseEnter={(e) => handlePlatformMouseEnter(e, label)}
+                          className="flex items-center justify-center p-1.5 bg-black/5 dark:bg-white/5 immersive:bg-white/5 rounded-md cursor-default"
+                          onMouseEnter={(e) => handlePlatformMouseEnter(e, key)}
                           onMouseMove={handlePlatformMouseMove}
                           onMouseLeave={handlePlatformMouseLeave}
-                          onTouchStart={(e) =>
-                            setPlatformPopover({
-                              isVisible: true,
-                              content: label,
-                              x: e.touches[0].clientX,
-                              y: e.touches[0].clientY,
-                            })
-                          }
-                          onTouchEnd={() =>
-                            setPlatformPopover((pp) => ({ ...pp, isVisible: false }))
-                          }
+                          data-stopdrag
                         >
-                          <Icon className="w-4 h-4 text-neutral-700 dark:text-neutral-300" />
+                          <Icon className="w-4 h-4 text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300" />
                         </div>
                       );
                     })}
                   </div>
                 )}
 
-                <div className="flex justify-center items-center gap-4 mt-4">
-                  <span className="text-xs">
-                    {i + 1} / {projects.length}
-                  </span>
-                  <button
-                    onClick={() => setIsShowAll(true)}
-                    className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer"
-                    aria-label="Show all projects"
-                  >
-                    <LayoutGrid className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+              <div className="flex justify-center items-center gap-4 mt-4">
+                <span className="text-xs">
+                  {currentIndex + 1} / {projects.length}
+                </span>
+                <button
+                  onClick={() => setIsShowAll(true)}
+                  className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 immersive:hover:bg-white/10 cursor-pointer"
+                  aria-label="Show all projects"
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                </button>
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </motion.article>
+        </AnimatePresence>
       </div>
 
       {/* Overview Modal */}
@@ -306,22 +251,22 @@ export default function ProjectSlider() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white dark:bg-neutral-800 rounded-2xl shadow-xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-4 md:p-6"
+              className="relative bg-white dark:bg-neutral-800 immersive:bg-neutral-800 rounded-2xl shadow-xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-4 md:p-6"
             >
               <h3 className="text-lg font-medium mb-6 text-center">All Projects</h3>
               <button
                 onClick={() => setIsShowAll(false)}
-                className="absolute top-4 right-4 p-1.5 rounded-full text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+                className="absolute top-4 right-4 p-1.5 rounded-full text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 immersive:hover:bg-neutral-700 transition-colors"
                 aria-label="Close project overview"
               >
                 <X className="w-5 h-5" />
               </button>
-
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {projects.map((project, index) => (
                   <button
                     key={project.title}
                     onClick={() => {
+                      setDirection(index > currentIndex ? 1 : -1);
                       setCurrentIndex(index);
                       setIsShowAll(false);
                     }}
