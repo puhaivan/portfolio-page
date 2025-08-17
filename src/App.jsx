@@ -5,6 +5,8 @@ import Popover from './components/Popover';
 import GitHubContributions from './components/GitHubStatus';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import CatModel from './components/CatModel';
 
 import { onPlatformEnter, onPlatformLeave } from './utils/helper';
 
@@ -444,7 +446,18 @@ const App = function () {
               <div className="col-span-1 md:col-span-5 min-h-0 overflow-hidden">
                 <div className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
                   <div className="relative w-full h-full overflow-hidden pointer-events-auto touch-auto">
-                    <div className="w-full h-full"></div>
+                    <div className="w-full h-full">
+                      <Canvas
+                        camera={{
+                          position: [0, 2, 10], // 🔥 move camera back & a little up
+                          fov: 45, // field of view (zoom level)
+                        }}
+                      >
+                        <ambientLight intensity={0.6} />
+                        <directionalLight position={[5, 5, 5]} />
+                        <CatModel />
+                      </Canvas>
+                    </div>
                   </div>
                 </div>
               </div>
