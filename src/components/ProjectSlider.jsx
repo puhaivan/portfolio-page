@@ -147,7 +147,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
             }}
             className="w-full h-full flex flex-col"
           >
-            {/* Image */}
             <div className="w-full max-h-[105px] sm:max-h-[120px] md:max-h-[160px] lg:max-h-[200px] overflow-hidden rounded-tl-3xl shadow-lg flex items-center justify-center bg-black">
               <img
                 src={projects[currentIndex].image}
@@ -156,7 +155,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
               />
             </div>
 
-            {/* Info panel */}
             <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100 bg-neutral-100/80 dark:bg-neutral-800/40 immersive:bg-neutral-800/40 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
               <div className="flex items-start justify-between mb-3 gap-4">
                 <div>
@@ -173,7 +171,8 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
                   rel="noreferrer"
                   className="flex-shrink-0 text-xs text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 hover:text-black dark:hover:text-white immersive:hover:text-white transition-colors flex items-center gap-1 group bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full font-medium whitespace-nowrap"
                 >
-                  View Project <ArrowUpRight className="w-3 h-3" />
+                  View Project
+                  <ArrowUpRight className="w-3 h-3 transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105" />
                 </a>
               </div>
 
