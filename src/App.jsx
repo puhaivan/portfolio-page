@@ -444,7 +444,11 @@ const App = function () {
                 </div>
               </div>
               <div className="col-span-1 md:col-span-5 min-h-0 overflow-hidden">
-                <div className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
+                <div
+                  className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100"
+                  onMouseEnter={onPlatformEnter}
+                  onMouseLeave={onPlatformLeave}
+                >
                   <div className="relative w-full h-full overflow-hidden pointer-events-auto touch-auto">
                     <div className="w-full h-full">
                       <Canvas
