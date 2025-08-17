@@ -452,13 +452,26 @@ const App = function () {
                   <div className="relative w-full h-full overflow-hidden pointer-events-auto touch-auto">
                     <div className="w-full h-full">
                       <Canvas
+                        shadows
                         camera={{
                           position: [0, 2, 10], // 🔥 move camera back & a little up
                           fov: 45, // field of view (zoom level)
                         }}
                       >
                         <ambientLight intensity={0.6} />
-                        <directionalLight position={[5, 5, 5]} />
+                        <directionalLight
+                          position={[5, 10, 5]}
+                          intensity={1}
+                          castShadow
+                          shadow-mapSize-width={20}
+                          shadow-mapSize-height={20}
+                          shadow-camera-near={1}
+                          shadow-camera-far={20}
+                          shadow-camera-left={-5}
+                          shadow-camera-right={5}
+                          shadow-camera-top={5}
+                          shadow-camera-bottom={-5}
+                        />
                         <CatModel />
                       </Canvas>
                     </div>
