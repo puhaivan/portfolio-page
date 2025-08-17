@@ -111,15 +111,19 @@ export default function GitHubContributions({ username }) {
                           ? { backgroundColor: day.color } // Dark/Immersive with contributions
                           : {}
                       }
-                      onMouseMove={(e) =>
+                      onMouseMove={(e) => {
                         setTooltip({
                           isVisible: true,
                           x: e.clientX,
                           y: e.clientY,
                           content: `${day.date}: ${day.contributionCount} contributions`,
-                        })
-                      }
-                      onMouseLeave={() => setTooltip({ ...tooltip, isVisible: false })}
+                        });
+                        e.currentTarget.style.transform = 'scale(1.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        setTooltip({ ...tooltip, isVisible: false });
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
                     />
                   ))}
                 </div>
