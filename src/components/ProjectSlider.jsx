@@ -13,10 +13,11 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
       year: '2025',
       url: 'https://promtify-aig.com',
       tagline: 'AI-powered prompts & workflows',
-      description: 'AI-powered prompts & workflows to speed up your creative process.',
-      tech: ['React', 'Tailwind'],
+      description:
+        'Full-Stack AI-powered image generation platform – Prompt generation with authentication & cloud integration.',
+      tech: ['React', 'TailwindCSS', 'Node.js', 'AWS S3', 'Stability AI'],
       image: '/images/promtify-aig.png',
-      platforms: ['web', 'chrome', 'desktop'],
+      platforms: ['web', 'desktop', 'safari', 'chrome'],
     },
     {
       title: 'Planets Awaken',
@@ -24,9 +25,9 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
       url: 'https://planets-awaken.com',
       tagline: 'Interactive planetary experience',
       description: 'Scroll through planets in a beautiful 3D interactive space journey.',
-      tech: ['React', 'Three.js'],
+      tech: ['TypeScript', 'Three.js', 'TailwindCSS'],
       image: '/images/planets-awaken.png',
-      platforms: ['web', 'safari', 'firefox', 'ios'],
+      platforms: ['web', 'desktop', 'safari', 'chrome'],
     },
   ];
 
@@ -121,7 +122,7 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
             exit={{ opacity: 0 }}
             className="absolute top-[55%] right-4 -translate-y-1/2 z-10 pointer-events-none"
           >
-            <ChevronLeft className="w-6 h-6 text-white/60" />
+            <ChevronLeft className="w-6 h-6 dark:text-white/60 immersive:text-white/60 text-black/60" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -129,7 +130,7 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
       {/* Slides */}
       <div className="w-full h-full relative">
         <AnimatePresence custom={direction} initial={false}>
-          <motion.article
+          <motion.div
             key={currentIndex}
             custom={direction}
             variants={slideVariants}
@@ -145,93 +146,97 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
               if (swipe < -100) paginate(1);
               else if (swipe > 100) paginate(-1);
             }}
-            className="w-full h-full flex flex-col"
+            className="w-full h-full flex flex-col cursor-grab active:cursor-grabbing"
           >
-            <div className="w-full max-h-[105px] sm:max-h-[120px] md:max-h-[160px] lg:max-h-[200px] overflow-hidden rounded-t-3xl shadow-lg flex items-center justify-center bg-black">
-              <img
-                src={projects[currentIndex].image}
-                alt={projects[currentIndex].title}
-                className="h-full w-full object-cover rounded-t-3xl"
-              />
-            </div>
-
-            <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100 bg-neutral-50/80 dark:bg-neutral-900/50 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
-              <div className="flex items-start justify-between mb-3 gap-4">
-                <div>
-                  <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-1">
-                    {projects[currentIndex].title}
-                  </h3>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm font-medium text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400">
-                    {projects[currentIndex].year}
-                  </span>
-                </div>
-                <a
-                  href={projects[currentIndex].url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-shrink-0 text-xs text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 hover:text-black dark:hover:text-white immersive:hover:text-white transition-colors flex items-center gap-1 group bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full font-medium whitespace-nowrap"
-                >
-                  View Project
-                  <ArrowUpRight className="w-3 h-3 transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105" />
-                </a>
+            {/* everything inside stays as it is — header image, description, etc */}
+            <motion.article className="w-full h-full flex flex-col">
+              <div className="w-full max-h-[120px] sm:max-h-[120px] md:max-h-[160px] lg:max-h-[200px] overflow-hidden rounded-t-3xl shadow-lg flex items-center justify-center bg-black">
+                <img
+                  src={projects[currentIndex].image}
+                  alt={projects[currentIndex].title}
+                  className="h-full w-full object-cover rounded-t-3xl"
+                  draggable={false}
+                />
               </div>
 
-              <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 mb-4 leading-relaxed max-w-2xl">
-                {projects[currentIndex].description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {projects[currentIndex].tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {Array.isArray(projects[currentIndex].platforms) &&
-                projects[currentIndex].platforms.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-black/5 dark:border-white/10 immersive:border-white/10">
-                    <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 mr-1">
-                      Platforms:
+              <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100 bg-neutral-50/80 dark:bg-neutral-900/50 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
+                <div className="flex items-start justify-between mb-3 gap-4">
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-1">
+                      {projects[currentIndex].title}
+                    </h3>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm font-medium text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400">
+                      {projects[currentIndex].year}
                     </span>
-                    {projects[currentIndex].platforms.map((raw) => {
-                      const key = String(raw).toLowerCase();
-                      const entry = platformIcons[key];
-                      const Icon = entry?.Icon || Globe;
-
-                      return (
-                        <div
-                          key={raw}
-                          className="flex items-center justify-center p-1.5 bg-black/5 dark:bg-white/5 immersive:bg-white/5 rounded-md cursor-default"
-                          onMouseEnter={(e) => handlePlatformMouseEnter(e, key)}
-                          onMouseMove={handlePlatformMouseMove}
-                          onMouseLeave={handlePlatformMouseLeave}
-                          data-stopdrag
-                        >
-                          <Icon className="w-4 h-4 text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300" />
-                        </div>
-                      );
-                    })}
                   </div>
-                )}
+                  <a
+                    href={projects[currentIndex].url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-shrink-0 text-xs text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 hover:text-black dark:hover:text-white immersive:hover:text-white transition-colors flex items-center gap-1 group bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full font-medium whitespace-nowrap"
+                  >
+                    View Project
+                    <ArrowUpRight className="w-3 h-3 transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-105" />
+                  </a>
+                </div>
 
-              <div className="flex justify-center items-center gap-4 mt-4">
-                <span className="text-xs">
-                  {currentIndex + 1} / {projects.length}
-                </span>
-                <button
-                  onClick={() => setIsShowAll(true)}
-                  className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 immersive:hover:bg-white/10 cursor-pointer"
-                  aria-label="Show all projects"
-                >
-                  <LayoutGrid className="w-3.5 h-3.5" />
-                </button>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 mb-4 leading-relaxed max-w-2xl">
+                  {projects[currentIndex].description}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {projects[currentIndex].tech.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 bg-black/10 dark:bg-white/10 immersive:bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {Array.isArray(projects[currentIndex].platforms) &&
+                  projects[currentIndex].platforms.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-black/5 dark:border-white/10 immersive:border-white/10">
+                      <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 mr-1">
+                        Platforms:
+                      </span>
+                      {projects[currentIndex].platforms.map((raw) => {
+                        const key = String(raw).toLowerCase();
+                        const entry = platformIcons[key];
+                        const Icon = entry?.Icon || Globe;
+
+                        return (
+                          <div
+                            key={raw}
+                            className="flex items-center justify-center p-1.5 bg-black/5 dark:bg-white/5 immersive:bg-white/5 rounded-md cursor-default"
+                            onMouseEnter={(e) => handlePlatformMouseEnter(e, key)}
+                            onMouseMove={handlePlatformMouseMove}
+                            onMouseLeave={handlePlatformMouseLeave}
+                            data-stopdrag
+                          >
+                            <Icon className="w-4 h-4 text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300" />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                <div className="flex justify-center items-center gap-4 mt-4">
+                  <span className="text-xs">
+                    {currentIndex + 1} / {projects.length}
+                  </span>
+                  <button
+                    onClick={() => setIsShowAll(true)}
+                    className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 immersive:hover:bg-white/10 cursor-pointer"
+                    aria-label="Show all projects"
+                  >
+                    <LayoutGrid className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
-            </div>
-          </motion.article>
+            </motion.article>
+          </motion.div>
         </AnimatePresence>
       </div>
 
@@ -269,14 +274,14 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
                       setCurrentIndex(index);
                       setIsShowAll(false);
                     }}
-                    className={`relative group block w-full aspect-square rounded-lg overflow-hidden cursor-pointer ${
+                    className={`relative group block w-full aspect-square rounded-lg overflow-hidden hover:scale-[1.02] cursor-pointer ${
                       currentIndex === index ? 'ring-2 ring-sky-500' : ''
                     }`}
                   >
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
                       <h4 className="text-xs font-medium text-white truncate">{project.title}</h4>
