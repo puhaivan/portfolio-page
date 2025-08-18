@@ -25,7 +25,7 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
       tagline: 'Interactive planetary experience',
       description: 'Scroll through planets in a beautiful 3D interactive space journey.',
       tech: ['React', 'Three.js'],
-      image: '/images/project2.jpg',
+      image: '/images/planets-awaken.png',
       platforms: ['web', 'safari', 'firefox', 'ios'],
     },
   ];
@@ -147,15 +147,15 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
             }}
             className="w-full h-full flex flex-col"
           >
-            <div className="w-full max-h-[105px] sm:max-h-[120px] md:max-h-[160px] lg:max-h-[200px] overflow-hidden rounded-tl-3xl shadow-lg flex items-center justify-center bg-black">
+            <div className="w-full max-h-[105px] sm:max-h-[120px] md:max-h-[160px] lg:max-h-[200px] overflow-hidden rounded-t-3xl shadow-lg flex items-center justify-center bg-black">
               <img
                 src={projects[currentIndex].image}
                 alt={projects[currentIndex].title}
-                className="h-full w-full object-cover rounded-lg"
+                className="h-full w-full object-cover rounded-t-3xl"
               />
             </div>
 
-            <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100 bg-neutral-100/80 dark:bg-neutral-800/40 immersive:bg-neutral-800/40 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
+            <div className="flex-shrink-0 p-6 md:p-8 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100 bg-neutral-50/80 dark:bg-neutral-900/50 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300">
               <div className="flex items-start justify-between mb-3 gap-4">
                 <div>
                   <h3 className="text-xl md:text-2xl font-medium tracking-tight mb-1">
@@ -255,7 +255,7 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
               <h3 className="text-lg font-medium mb-6 text-center">All Projects</h3>
               <button
                 onClick={() => setIsShowAll(false)}
-                className="absolute top-4 right-4 p-1.5 rounded-full text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 immersive:hover:bg-neutral-700 transition-colors"
+                className="absolute top-4 right-4 p-1.5 rounded-full cursor-pointer text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 immersive:hover:bg-neutral-700 transition-colors"
                 aria-label="Close project overview"
               >
                 <X className="w-5 h-5" />
@@ -269,7 +269,7 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
                       setCurrentIndex(index);
                       setIsShowAll(false);
                     }}
-                    className={`relative group block w-full aspect-square rounded-lg overflow-hidden ${
+                    className={`relative group block w-full aspect-square rounded-lg overflow-hidden cursor-pointer ${
                       currentIndex === index ? 'ring-2 ring-sky-500' : ''
                     }`}
                   >
