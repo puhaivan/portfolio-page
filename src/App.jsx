@@ -150,7 +150,7 @@ const App = function () {
               <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full flex flex-col p-6 md:p-8 overflow-hidden text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
                 <div className="flex-grow">
                   <div className="flex items-start gap-4 mb-6">
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 shrink-0">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 shrink-0transition-transform duration-200 hover:scale-105">
                       <img
                         src={avatar}
                         alt="Ivan Puha profile picture"
@@ -162,29 +162,27 @@ const App = function () {
                         Ivan Puha
                       </h1>
                       <p className="text-sm text-neutral-600 dark:text-neutral-400 immersive:text-neutral-400">
-                        Full-stack Developer & Game Dev
+                        Front-end Developer & Full-stack Developer
                       </p>
                     </div>
                   </div>
 
                   <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 leading-relaxed mb-3">
-                    Full-stack developer &amp; creative tech enthusiast from Antwerp, Belgium.
-                    Founder of{' '}
+                    Full-stack developer &amp; creative tech enthusiast based in New York, USA.{' '}
                     <strong className="font-medium text-black dark:text-white immersive:text-white">
-                      Okapi Works, my freelance company
-                    </strong>
-                    , and enjoy collaborating with startups. Focused on building interactive,
-                    scalable web experiences.
+                      Dedicated to collaborating
+                    </strong>{' '}
+                    with innovative teams to build interactive, scalable web experiences.
                   </p>
                   <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 leading-relaxed mb-6">
                     Currently developing{' '}
                     <strong className="font-medium text-black dark:text-white immersive:text-white">
-                      ORNITHO
-                    </strong>
-                    , a dinosaur horror game set in Antwerp, in my free time. Actively seeking
-                    international contract opportunities in{' '}
+                      side projects
+                    </strong>{' '}
+                    to expand my portfolio and showcase technical creativity. Open to international
+                    contract opportunities in{' '}
                     <strong className="font-medium text-black dark:text-white immersive:text-white">
-                      North America, Japan, or the UK
+                      North America, Europe, and the UK
                     </strong>
                     . Also, a big fan of cats.
                   </p>
@@ -347,7 +345,7 @@ const App = function () {
                         onMouseEnter={(e) =>
                           setPlatformPopover({
                             isVisible: true,
-                            content: 'Email me',
+                            content: 'Email',
                             x: e.clientX,
                             y: e.clientY,
                           })
@@ -380,7 +378,7 @@ const App = function () {
                         href="/resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        download
+                        download="Ivan_Puha_Resume.pdf"
                         className="p-1.5 wiggle text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 hover:text-black dark:hover:text-white immersive:hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-500 dark:focus-visible:ring-offset-black immersive:focus-visible:ring-offset-black rounded-lg"
                         aria-label="Resume"
                         tabIndex="0"
@@ -425,7 +423,7 @@ const App = function () {
 
           <div className="col-span-1 lg:col-span-4 grid auto-rows-auto gap-4 md:gap-6">
             <div className="row-span-1 w-full  lg:h-full">
-              <div className="bg-neutral-100/80 dark:bg-neutral-800/40 immersive:bg-neutral-800/40 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300 rounded-3xl h-full overflow-hidden !p-0 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
+              <div className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300 rounded-3xl h-full overflow-hidden !p-0 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
                 <ProjectSlider
                   theme={theme}
                   platformPopover={platformPopover}

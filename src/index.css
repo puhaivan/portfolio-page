@@ -14,10 +14,17 @@
 }
 
 :root.immersive[data-project='0'] {
-  --bg-base: linear-gradient(to bottom right, #1e3c72, #2a5298);
+  --bg-base: linear-gradient(132deg, #a1c4fd 0%, #d4e0ff 30%, #fbc2eb 70%, #d1a1f8 100%);
 }
 :root.immersive[data-project='1'] {
-  --bg-base: linear-gradient(to bottom right, #4b1051, #434343);
+  --bg-base: linear-gradient(
+    132deg,
+    #0b0d2d 0%,
+    #1a1446 25%,
+    #32235f 50%,
+    #4a2a7f 70%,
+    #2e3b8e 100%
+  );
 }
 :root.immersive[data-project='2'] {
   --bg-base: linear-gradient(to bottom right, #ff6a00, #ee0979);
