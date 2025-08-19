@@ -7,6 +7,8 @@ import GitHubContributions from './components/GitHubStatus';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import CatModel from './components/CatModel';
+import { Suspense } from 'react';
+import { Html } from '@react-three/drei';
 
 import { onPlatformEnter, onPlatformLeave } from './utils/helper';
 
@@ -470,7 +472,19 @@ const App = function () {
                           shadow-camera-top={5}
                           shadow-camera-bottom={-5}
                         />
-                        <CatModel />
+                        <Suspense
+                          fallback={
+                            <Html>
+                              <div className="flex items-center justify-center w-full h-full">
+                                <span className="text-sm text-neutral-500 dark:text-neutral-400">
+                                  Loading model...
+                                </span>
+                              </div>
+                            </Html>
+                          }
+                        >
+                          <CatModel />
+                        </Suspense>
                       </Canvas>
                     </div>
                   </div>
