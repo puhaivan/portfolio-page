@@ -8,10 +8,17 @@ export default function CatModel() {
   const { scene } = useGLTF('/models/cat/cat-walk.glb');
 
   const bodyTexture = useTexture('/models/cat/textures/gltf_embedded_0.jpeg');
+  const catMaterialRef = useRef(null);
 
-  useFrame(() => {
-    if (group.current) {
-      group.current.rotation.y += 0.002;
+  const ready = useRef(false);
+
+  useEffect(() => {
+    ready.current = true;
+  }, []);
+
+  useFrame((state, delta) => {
+    if (group.current && ready.current) {
+      group.current.rotation.y += delta * 0.3;
     }
   });
 
@@ -21,8 +28,13 @@ export default function CatModel() {
         child.castShadow = true;
         child.receiveShadow = true;
         if (child.name === '0000_pet_s_4cat_Black_1') {
-          child.material = new THREE.MeshStandardMaterial({ map: bodyTexture });
+          child.material = new THREE.MeshStandardMaterial({
+            map: bodyTexture,
+            emissive: new THREE.Color('#222222'),
+            emissiveIntensity: 0.2,
+          });
           child.material.needsUpdate = true;
+          catMaterialRef.current = child.material;
         }
       }
     });
@@ -38,12 +50,16 @@ export default function CatModel() {
   };
 
   const handlePointerOver = () => {
-    if (group.current) group.current.scale.set(0.11, 0.09, 0.09);
+    if (catMaterialRef.current) {
+      catMaterialRef.current.emissiveIntensity = 0.6;
+    }
     document.body.style.cursor = 'pointer';
   };
 
   const handlePointerOut = () => {
-    if (group.current) group.current.scale.set(0.1, 0.08, 0.08);
+    if (catMaterialRef.current) {
+      catMaterialRef.current.emissiveIntensity = 0.2;
+    }
     document.body.style.cursor = 'default';
   };
 

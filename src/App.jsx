@@ -96,7 +96,7 @@ const App = function () {
                         />
                         <Suspense
                           fallback={
-                            <Html>
+                            <Html fullscreen>
                               <div className="flex items-center justify-center w-full h-full">
                                 <span className="text-sm text-neutral-500 dark:text-neutral-400">
                                   Loading model...
