@@ -6,6 +6,12 @@
 :root {
   --bg-base: rgb(250, 248, 245);
   --text-color: #111;
+  --contrib-zero-bg: #f5f5f5;
+}
+
+.dark,
+.immersive {
+  --contrib-zero-bg: #262626;
 }
 
 :root.dark {
