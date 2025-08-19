@@ -47,7 +47,7 @@ const App = function () {
 
           <div className="col-span-1 lg:col-span-4 grid auto-rows-auto gap-4 md:gap-6">
             <div className="row-span-1 w-full  lg:h-full">
-              <div className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300 rounded-3xl h-full overflow-hidden !p-0 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
+              <div className="bg-neutral-100 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-b-3xl shadow-sm transition-colors duration-300 rounded-3xl h-full overflow-hidden !p-0 text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
                 <ProjectSlider
                   theme={theme}
                   platformPopover={platformPopover}
@@ -56,18 +56,18 @@ const App = function () {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-              <div className="col-span-1 md:col-span-7 min-h-0 overflow-hidden">
+              <div className="col-span-1 md:col-span-7 min-h-0 overflow-hidden pt-1 pb-1">
                 <div
-                  className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full p-4 md:p-4 flex flex-col text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100"
+                  className="bg-white dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full p-4 md:p-4 flex flex-col text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100"
                   onMouseEnter={onPlatformEnter}
                   onMouseLeave={onPlatformLeave}
                 >
                   <GitHubContributions username="puhaivan" />
                 </div>
               </div>
-              <div className="col-span-1 md:col-span-5 min-h-0 overflow-hidden">
+              <div className="col-span-1 md:col-span-5 min-h-0 overflow-hidden pt-1 pb-1">
                 <div
-                  className="bg-neutral-100/80 dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100"
+                  className="bg-white dark:bg-neutral-800/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full !p-0 overflow-hidden relative text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100"
                   onMouseEnter={onPlatformEnter}
                   onMouseLeave={onPlatformLeave}
                 >

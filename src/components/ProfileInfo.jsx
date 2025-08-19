@@ -1,19 +1,25 @@
 import avatar from '/images/avatar.png';
-
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 const ProfileInfo = function ({ setPopover }) {
   return (
     <>
       <div className="flex-1 min-h-0">
-        <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full flex flex-col p-6 md:p-8 overflow-hidden text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
+        <div className="bg-neutral-100/80 dark:bg-[#1D1D1F]/80 immersive:bg-neutral-800/80 border-black/5 dark:border-white/10 immersive:border-white/10 backdrop-blur-lg rounded-3xl shadow-sm transition-colors duration-300 h-full flex flex-col pt-6 pl-6 pr-6 pb-8 md:p-8 overflow-hidden text-neutral-900 dark:text-neutral-100 immersive:text-neutral-100">
           <div className="flex-grow">
             <div className="flex items-start gap-4 mb-6">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 shrink-0transition-transform duration-200 hover:scale-105">
+              <motion.div
+                className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white/10 shrink-0"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
                 <img
                   src={avatar}
                   alt="Ivan Puha profile picture"
                   className="absolute inset-0 w-full h-full object-cover text-transparent"
                 />
-              </div>
+              </motion.div>
+
               <div>
                 <h1 className="text-xl font-semibold tracking-tight text-black dark:text-white immersive:text-white mb-0.5">
                   Ivan Puha

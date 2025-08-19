@@ -5,9 +5,6 @@ export default function GitHubContributions({ username }) {
   const [weeks, setWeeks] = useState([]);
   const [tooltip, setTooltip] = useState({ isVisible: false, content: '', x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(false);
-  const isDark =
-    document.documentElement.classList.contains('dark') ||
-    document.documentElement.classList.contains('immersive');
 
   const [animatedCount, setAnimatedCount] = useState(0);
 
@@ -150,26 +147,25 @@ export default function GitHubContributions({ username }) {
         <div className="w-full max-w-[350px]">
           <div className="overflow-x-auto scrollbar-hide pb-1">
             {isLoading ? (
-              <span className="text-xs text-neutral-500 dark:text-neutral-400">
-                Loading stats...
-              </span>
+              <div className="flex items-center justify-center w-full py-4">
+                <span className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Loading stats...
+                </span>
+              </div>
             ) : (
-              <div className="inline-grid grid-flow-col auto-cols-max gap-[2px]">
+              <div className="grid grid-flow-col auto-cols-max gap-[2px]">
                 {weeks.map((week, wi) => (
                   <div key={wi} className="grid grid-rows-7 gap-[2px]">
                     {week.contributionDays.map((day, di) => (
                       <div
                         key={di}
-                        className={`w-2.5 h-2.5 rounded-[2px] transition-colors cursor-default
-          ${isDark && day.contributionCount === 0 ? 'bg-neutral-800' : ''}
-          ${!isDark && day.contributionCount === 0 ? 'bg-neutral-100' : ''}`}
-                        style={
-                          !isDark
-                            ? { backgroundColor: day.color }
-                            : day.contributionCount > 0
-                            ? { backgroundColor: day.color }
-                            : {}
-                        }
+                        className="w-2.5 h-2.5 rounded-[2px] cursor-default"
+                        style={{
+                          backgroundColor:
+                            day.contributionCount > 0
+                              ? day.color // heat color
+                              : 'var(--contrib-zero-bg)', // theme-aware zero color
+                        }}
                         onMouseMove={(e) => {
                           setTooltip({
                             isVisible: true,

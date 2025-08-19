@@ -18,7 +18,7 @@ const ThemeSwitcher = function ({ theme, setTheme, setPopover }) {
                 theme === 'light'
                   ? 'Switch to Dark'
                   : theme === 'dark'
-                  ? 'Switch to Immersion'
+                  ? 'Switch to Immersive'
                   : 'Switch to Light',
               x: e.clientX,
               y: e.clientY,
