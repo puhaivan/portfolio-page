@@ -10,10 +10,8 @@ export default {
   },
   plugins: [
     plugin(({ addVariant }) => {
-      // Targets when parent has .dark
       addVariant('dark-child', '.dark &');
 
-      // Targets when parent has .immersive
       addVariant('immersive', '.immersive &');
     }),
   ],

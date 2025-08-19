@@ -64,8 +64,8 @@ export default function GitHubContributions({ username }) {
   useEffect(() => {
     if (!isLoading && totalContributions > 0) {
       setAnimatedCount(0);
-      const duration = 1000; // total animation time (ms)
-      const steps = 60; // number of updates
+      const duration = 1000;
+      const steps = 60;
       const increment = totalContributions / steps;
       let current = 0;
       let step = 0;
@@ -147,15 +147,12 @@ export default function GitHubContributions({ username }) {
       </div>
 
       <div className="flex items-center justify-center relative">
-        {/* Contributions grid */}
         <div className="w-full max-w-[350px]">
           <div className="overflow-x-auto scrollbar-hide pb-1">
             {isLoading ? (
-              <div className="flex items-center justify-center w-full h-32">
-                <span className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Loading stats...
-                </span>
-              </div>
+              <span className="text-xs text-neutral-500 dark:text-neutral-400">
+                Loading stats...
+              </span>
             ) : (
               <div className="inline-grid grid-flow-col auto-cols-max gap-[2px]">
                 {weeks.map((week, wi) => (
@@ -168,9 +165,9 @@ export default function GitHubContributions({ username }) {
           ${!isDark && day.contributionCount === 0 ? 'bg-neutral-100' : ''}`}
                         style={
                           !isDark
-                            ? { backgroundColor: day.color } // Light theme → always use GitHub color
+                            ? { backgroundColor: day.color }
                             : day.contributionCount > 0
-                            ? { backgroundColor: day.color } // Dark/Immersive with contributions
+                            ? { backgroundColor: day.color }
                             : {}
                         }
                         onMouseMove={(e) => {
@@ -195,7 +192,6 @@ export default function GitHubContributions({ username }) {
           </div>
         </div>
 
-        {/* Tooltip */}
         <Popover
           isVisible={tooltip.isVisible}
           x={tooltip.x}

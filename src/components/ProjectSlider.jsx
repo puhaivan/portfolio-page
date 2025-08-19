@@ -4,33 +4,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, LayoutGrid, X, ChevronLeft, Globe, Smartphone } from 'lucide-react';
 import { SiGooglechrome, SiSafari, SiFirefoxbrowser, SiApple } from 'react-icons/si';
 import { FaWindows } from 'react-icons/fa';
+
+import { projects } from '@/utils/constans';
+
 import Popover from './Popover';
 
 export default function ProjectSlider({ theme, platformPopover, setPlatformPopover }) {
-  const projects = [
-    {
-      title: 'Promtify AIG',
-      year: '2025',
-      url: 'https://promtify-aig.com',
-      tagline: 'AI-powered prompts & workflows',
-      description:
-        'Full-Stack AI-powered image generation platform – Prompt generation with authentication & cloud integration.',
-      tech: ['React', 'TailwindCSS', 'Node.js', 'AWS S3', 'Stability AI'],
-      image: '/images/promtify-aig.png',
-      platforms: ['web', 'desktop', 'safari', 'chrome'],
-    },
-    {
-      title: 'Planets Awaken',
-      year: '2025',
-      url: 'https://planets-awaken.com',
-      tagline: 'Interactive planetary experience',
-      description: 'Scroll through planets in a beautiful 3D interactive space journey.',
-      tech: ['TypeScript', 'Three.js', 'TailwindCSS'],
-      image: '/images/planets-awaken.png',
-      platforms: ['web', 'desktop', 'safari', 'chrome'],
-    },
-  ];
-
   const platformIcons = {
     web: { Icon: Globe, label: 'Web' },
     ios: { Icon: SiApple, label: 'iOS' },
@@ -41,13 +20,11 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
     desktop: { Icon: FaWindows, label: 'Windows' },
   };
 
-  // --- state
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isShowAll, setIsShowAll] = useState(false);
   const [isShowNudgeHint, setIsShowNudgeHint] = useState(true);
 
-  // slide variants
   const slideVariants = {
     enter: (dir) => ({
       x: dir > 0 ? '100%' : '-100%',
@@ -74,19 +51,16 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
     }
   }, [theme, currentIndex]);
 
-  // auto-hide nudge arrow
   useEffect(() => {
     const timer = setTimeout(() => setIsShowNudgeHint(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  // navigation helpers
   const paginate = (dir) => {
     setDirection(dir);
     setCurrentIndex((prev) => (prev + dir + projects.length) % projects.length);
   };
 
-  // Platform popover
   const handlePlatformMouseEnter = (e, key) => {
     const def = platformIcons[key] || { label: key };
     setPlatformPopover({ isVisible: true, content: def.label, x: e.clientX, y: e.clientY });
@@ -97,7 +71,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
 
   return (
     <div className="relative w-full h-full group/nav overflow-hidden">
-      {/* Hover hints */}
       <div className="absolute left-2 md:left-4 bottom-2 md:bottom-4 z-20 pointer-events-none opacity-0 group-hover/nav:opacity-100 transition-opacity">
         <div className="px-3 py-1 rounded-full bg-black/40 dark:bg-white/10 immersive:bg-white/10 text-white dark:text-neutral-200 immersive:text-neutral-200 text-[10px] md:text-xs font-medium">
           Slide Right
@@ -109,7 +82,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
         </div>
       </div>
 
-      {/* Nudge arrow hint */}
       <AnimatePresence>
         {isShowNudgeHint && (
           <motion.div
@@ -127,7 +99,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
         )}
       </AnimatePresence>
 
-      {/* Slides */}
       <div className="w-full h-full relative">
         <AnimatePresence custom={direction} initial={false}>
           <motion.div
@@ -148,7 +119,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
             }}
             className="w-full h-full flex flex-col cursor-grab active:cursor-grabbing"
           >
-            {/* everything inside stays as it is — header image, description, etc */}
             <motion.article className="w-full h-full flex flex-col">
               <div className="w-full max-h-[120px] sm:max-h-[120px] md:max-h-[160px] lg:max-h-[200px] overflow-hidden rounded-t-3xl shadow-lg flex items-center justify-center bg-black">
                 <img
@@ -240,7 +210,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
         </AnimatePresence>
       </div>
 
-      {/* Overview Modal */}
       <AnimatePresence>
         {isShowAll && (
           <motion.div
@@ -294,7 +263,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
         )}
       </AnimatePresence>
 
-      {/* Floating platform popover */}
       <Popover
         isVisible={platformPopover.isVisible}
         content={platformPopover.content}
