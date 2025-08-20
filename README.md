@@ -1,12 +1,64 @@
-# React + Vite
+# 🌌 Ivan’s Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my personal developer portfolio — a showcase of my work, experiments, and passion for building clean, interactive web experiences.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
+👉 [ivanpuha.com](https://ivanpuha.com)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📸 Screenshots
+
+<p align="center">
+  <img src="./public/assets/demo/profile-immersive.png" alt="Immersive theme preview" width="30%" />
+  <img src="./public/assets/demo/profile-light.png" alt="Light theme preview" width="30%" />
+  <img src="./public/assets/demo/profile-dark.png" alt="Dark theme preview" width="30%" />
+</p>
+
+---
+
+## 🚀 Features
+- **Modern Tech Stack** → React + Vite + TailwindCSS + Framer Motion  
+- **3D & Interactive** → Powered by Three.js / React Three Fiber  
+- **Theming** → Light ☀️ | Dark 🌙 | Immersive ✨  
+- **Performance Focused** → Optimized assets, lazy loading, responsive design  
+
+---
+
+## 🖼️ Projects
+Some highlights you’ll find on the portfolio:
+
+- **🖌️ AI Image Generator** → Generate, store, and explore images using AI models.  
+- **🌍 Planets Awaken (3D Solar Experience)** → Scroll-based GSAP animations with 3D planets.  
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend:** React, Vite, TailwindCSS, Framer Motion  
+- **3D/Animations:** React Three Fiber, Drei, GSAP  
+- **Backend (Projects):** Node.js, Express, MongoDB, AWS S3  
+- **Tools:** ESLint + Prettier, GitHub Actions, VS Code  
+
+---
+
+## ⚡ Getting Started
+Clone & run locally:
+
+```bash
+git clone https://github.com/puhaivan/portfolio-page.git
+cd portfolio
+npm install
+npm run dev
+``` 
+
+---
+
+
+## 📬 Contact
+[LinkedIn](https://www.linkedin.com/in/ivan-puga/)
+[Email Me](mailto:unsaightly@gmail.com)
+
+
+## ✨ Thanks for visiting my portfolio! Feedback and collaboration ideas are always welcome. ✨
