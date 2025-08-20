@@ -12,9 +12,9 @@ Welcome to my personal developer portfolio — a showcase of my work, experiment
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="./public/assets/demo/profile-immersive.png" alt="Immersive theme preview" width="30%" />
-  <img src="./public/assets/demo/profile-light.png" alt="Light theme preview" width="30%" />
-  <img src="./public/assets/demo/profile-dark.png" alt="Dark theme preview" width="30%" />
+  <img src="./public/assets/demo/portfolio-immersive.png" alt="Immersive theme preview" width="30%" />
+  <img src="./public/assets/demo/portfolio-light.png" alt="Light theme preview" width="30%" />
+  <img src="./public/assets/demo/portfolio-dark.png" alt="Dark theme preview" width="30%" />
 </p>
 
 ---
