@@ -33,13 +33,6 @@ Some highlights you’ll find on the portfolio:
 - **🖌️ AI Image Generator** → Generate, store, and explore images using AI models.  
 - **🌍 Planets Awaken (3D Solar Experience)** → Scroll-based GSAP animations with 3D planets.  
 
----
-
-## 🛠️ Tech Stack
-- **Frontend:** React, Vite, TailwindCSS, Framer Motion  
-- **3D/Animations:** React Three Fiber, Drei, GSAP  
-- **Backend (Projects):** Node.js, Express, MongoDB, AWS S3  
-- **Tools:** ESLint + Prettier, GitHub Actions, VS Code  
 
 ---
 
@@ -48,7 +41,7 @@ Clone & run locally:
 
 ```bash
 git clone https://github.com/puhaivan/portfolio-page.git
-cd portfolio
+cd portfolio-page
 npm install
 npm run dev
 ``` 
