@@ -34,7 +34,11 @@ const App = function () {
 
   return (
     <div className=" w-full p-4 md:p-6 lg:p-8 overflow-hidden transition-background duration-1000 ease-in-out">
-      <ThemeSwitcher theme={theme} setTheme={setTheme} setPopover={setPlatformPopover} />
+      <ThemeSwitcher
+        theme={theme}
+        setTheme={setTheme}
+        setPopover={setPlatformPopover}
+      />
       <div className="relative z-10 max-w-7xl mx-auto min-h-[calc(100vh-4rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 md:gap-6 h-full">
           <div

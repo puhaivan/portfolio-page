@@ -3,7 +3,12 @@ import Popover from './Popover';
 
 export default function GitHubContributions({ username }) {
   const [weeks, setWeeks] = useState([]);
-  const [tooltip, setTooltip] = useState({ isVisible: false, content: '', x: 0, y: 0 });
+  const [tooltip, setTooltip] = useState({
+    isVisible: false,
+    content: '',
+    x: 0,
+    y: 0,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const [animatedCount, setAnimatedCount] = useState(0);
@@ -41,7 +46,8 @@ export default function GitHubContributions({ username }) {
 
         const json = await res.json();
         const weeksData =
-          json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks || [];
+          json?.data?.user?.contributionsCollection?.contributionCalendar
+            ?.weeks || [];
         setWeeks(weeksData.slice(-29));
       } catch (error) {
         console.log(error);
@@ -54,7 +60,12 @@ export default function GitHubContributions({ username }) {
   }, [username]);
 
   const totalContributions = weeks.reduce(
-    (acc, week) => acc + week.contributionDays.reduce((sum, day) => sum + day.contributionCount, 0),
+    (acc, week) =>
+      acc +
+      week.contributionDays.reduce(
+        (sum, day) => sum + day.contributionCount,
+        0
+      ),
     0
   );
 

@@ -1,44 +1,82 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState, useCallback } from 'react';
 
 const ThemeSwitcher = function ({ theme, setTheme, setPopover }) {
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hoverOK = window.matchMedia('(hover: hover)').matches;
+      const finePointer = window.matchMedia('(pointer: fine)').matches;
+      setCanHover(hoverOK && finePointer);
+    }
+  }, []);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setPopover((prev) => ({ ...prev, isVisible: false }));
+    }, 0);
+    return () => clearTimeout(id);
+  }, [theme, setPopover]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) =>
+      prev === 'light' ? 'dark' : prev === 'dark' ? 'immersive' : 'light'
+    );
+
+    setPopover((prev) => ({ ...prev, isVisible: false }));
+  }, [setTheme, setPopover]);
+
+  const showTip = useCallback(
+    (e) => {
+      if (!canHover) return;
+      setPopover({
+        isVisible: true,
+        content:
+          theme === 'light'
+            ? 'Switch to Dark'
+            : theme === 'dark'
+              ? 'Switch to Immersive'
+              : 'Switch to Light',
+        x: e.clientX,
+        y: e.clientY,
+      });
+    },
+    [canHover, setPopover, theme]
+  );
+
+  const moveTip = useCallback(
+    (e) => {
+      if (!canHover) return;
+      setPopover((prev) => ({ ...prev, x: e.clientX, y: e.clientY }));
+    },
+    [canHover, setPopover]
+  );
+
+  const hideTip = useCallback(() => {
+    if (!canHover) return;
+    setPopover((prev) => ({ ...prev, isVisible: false }));
+  }, [canHover, setPopover]);
+
   return (
     <>
       <div className="fixed bottom-6 left-6 z-50 group">
         <button
-          onClick={() => {
-            setTheme((prev) =>
-              prev === 'light' ? 'dark' : prev === 'dark' ? 'immersive' : 'light'
-            );
-          }}
-          onMouseEnter={(e) => {
-            setPopover({
-              isVisible: true,
-              content:
-                theme === 'light'
-                  ? 'Switch to Dark'
-                  : theme === 'dark'
-                  ? 'Switch to Immersive'
-                  : 'Switch to Light',
-              x: e.clientX,
-              y: e.clientY,
-            });
-          }}
-          onMouseMove={(e) => {
-            setPopover((prev) => ({
-              ...prev,
-              x: e.clientX,
-              y: e.clientY,
-            }));
-          }}
-          onMouseLeave={() => setPopover((prev) => ({ ...prev, isVisible: false }))}
+          onClick={toggleTheme}
+          onPointerEnter={showTip}
+          onPointerMove={moveTip}
+          onPointerLeave={hideTip}
+          onPointerCancel={hideTip}
+          onTouchStart={() =>
+            setPopover((prev) => ({ ...prev, isVisible: false }))
+          }
           className="p-2 w-9 h-9 flex items-center justify-center rounded-full 
-   bg-neutral-200/70 immersive:bg-neutral-800/70 dark:bg-neutral-800/70 backdrop-blur-sm 
-   border border-black/10 dark:border-white/10 immersive:border-white/10
-   text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300
-   hover:text-black dark:hover:text-white immersive:hover:text-white
-   hover:scale-110 transition-all duration-200 
-   focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 cursor-pointer"
+          bg-neutral-200/70 immersive:bg-neutral-800/70 dark:bg-neutral-800/70 backdrop-blur-sm 
+          border border-black/10 dark:border-white/10 immersive:border-white/10
+          text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300
+          hover:text-black dark:hover:text-white immersive:hover:text-white
+          hover:scale-110 transition-all duration-200 
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 cursor-pointer"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -63,9 +101,10 @@ const ThemeSwitcher = function ({ theme, setTheme, setPopover }) {
                   className="lucide lucide-sun w-5 h-5"
                 >
                   {' '}
-                  <circle cx="12" cy="12" r="4" /> <path d="M12 2v2" /> <path d="M12 20v2" />{' '}
-                  <path d="m4.93 4.93 1.41 1.41" /> <path d="m17.66 17.66 1.41 1.41" />{' '}
-                  <path d="M2 12h2" /> <path d="M20 12h2" /> <path d="m6.34 17.66-1.41 1.41" />{' '}
+                  <circle cx="12" cy="12" r="4" /> <path d="M12 2v2" />{' '}
+                  <path d="M12 20v2" /> <path d="m4.93 4.93 1.41 1.41" />{' '}
+                  <path d="m17.66 17.66 1.41 1.41" /> <path d="M2 12h2" />{' '}
+                  <path d="M20 12h2" /> <path d="m6.34 17.66-1.41 1.41" />{' '}
                   <path d="m19.07 4.93-1.41 1.41" />{' '}
                 </svg>
               )}{' '}
@@ -103,8 +142,8 @@ const ThemeSwitcher = function ({ theme, setTheme, setPopover }) {
                 >
                   {' '}
                   <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>{' '}
-                  <path d="M20 3v4"></path> <path d="M22 5h-4"></path> <path d="M4 17v2"></path>{' '}
-                  <path d="M5 18H3"></path>{' '}
+                  <path d="M20 3v4"></path> <path d="M22 5h-4"></path>{' '}
+                  <path d="M4 17v2"></path> <path d="M5 18H3"></path>{' '}
                 </svg>
               )}
             </motion.div>

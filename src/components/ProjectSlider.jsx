@@ -1,13 +1,29 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, LayoutGrid, X, ChevronLeft, Globe, Smartphone } from 'lucide-react';
-import { SiGooglechrome, SiSafari, SiFirefoxbrowser, SiApple } from 'react-icons/si';
+import {
+  ArrowUpRight,
+  LayoutGrid,
+  X,
+  ChevronLeft,
+  Globe,
+  Smartphone,
+} from 'lucide-react';
+import {
+  SiGooglechrome,
+  SiSafari,
+  SiFirefoxbrowser,
+  SiApple,
+} from 'react-icons/si';
 import { FaWindows } from 'react-icons/fa';
 import { projects } from '@/utils/constans';
 import Popover from './Popover';
 
-export default function ProjectSlider({ theme, platformPopover, setPlatformPopover }) {
+export default function ProjectSlider({
+  theme,
+  platformPopover,
+  setPlatformPopover,
+}) {
   const platformIcons = {
     web: { Icon: Globe, label: 'Web' },
     ios: { Icon: SiApple, label: 'iOS' },
@@ -91,11 +107,17 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
 
   const handlePlatformMouseEnter = (e, key) => {
     const def = platformIcons[key] || { label: key };
-    setPlatformPopover({ isVisible: true, content: def.label, x: e.clientX, y: e.clientY });
+    setPlatformPopover({
+      isVisible: true,
+      content: def.label,
+      x: e.clientX,
+      y: e.clientY,
+    });
   };
   const handlePlatformMouseMove = (e) =>
     setPlatformPopover((p) => ({ ...p, x: e.clientX, y: e.clientY }));
-  const handlePlatformMouseLeave = () => setPlatformPopover((p) => ({ ...p, isVisible: false }));
+  const handlePlatformMouseLeave = () =>
+    setPlatformPopover((p) => ({ ...p, isVisible: false }));
 
   const goToIndex = (index) => {
     if (index === currentIndex) {
@@ -103,7 +125,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
       return;
     }
 
-    // lock current height so the container won't cut during transition
     if (articleRef.current) {
       const h = articleRef.current.scrollHeight || measuredH;
       setLockedMinH(Math.ceil(h));
@@ -117,7 +138,6 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
 
   return (
     <div className="relative w-full group/nav overflow-hidden isolate">
-      {/* Controls */}
       <div className="absolute left-2 md:left-4 bottom-2 md:bottom-4 z-50 opacity-0 group-hover/nav:opacity-100 transition-opacity">
         <button
           onClick={() => paginate(-1)}
@@ -146,7 +166,11 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
             animate={{
               opacity: [0, 1, 1, 0],
               x: [0, 0, -10, -10],
-              transition: { duration: 2.5, times: [0, 0.2, 0.8, 1], ease: 'easeInOut' },
+              transition: {
+                duration: 2.5,
+                times: [0, 0.2, 0.8, 1],
+                ease: 'easeInOut',
+              },
             }}
             exit={{ opacity: 0 }}
             className="absolute top-[55%] right-4 -translate-y-1/2 z-40 pointer-events-none"
@@ -156,18 +180,14 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
         )}
       </AnimatePresence>
 
-      {/* Height-stable wrapper with Sizer */}
       <div className="relative w-full" style={{ overflow: 'hidden' }}>
-        {/* Sizer: controls layout height */}
         <div
           aria-hidden
           className="w-full"
           style={{
-            height: isTransitioning ? lockedMinH ?? measuredH : measuredH,
+            height: isTransitioning ? (lockedMinH ?? measuredH) : measuredH,
           }}
         />
-
-        {/* Slides overlay (absolute, no layout impact) */}
         <div className="absolute inset-0">
           <AnimatePresence
             custom={direction}
@@ -200,10 +220,7 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
               }}
               className="w-full cursor-grab active:cursor-grabbing z-10"
             >
-              {/* IMPORTANT: no h-full here; let content define height */}
               <motion.article ref={articleRef} className="w-full flex flex-col">
-                {/* Give image area a MIN height so it doesn't collapse before load */}
-                {/* Image wrapper */}
                 <div className="w-full h-[120px] sm:h-[120px] md:h-[160px] lg:h-[200px] overflow-hidden rounded-t-3xl shadow-lg flex items-center justify-center bg-black">
                   <img
                     src={projects[currentIndex].image}
@@ -270,7 +287,9 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
                             <div
                               key={raw}
                               className="flex items-center justify-center p-1.5 bg-black/5 dark:bg-white/5 immersive:bg-white/5 rounded-md cursor-default"
-                              onMouseEnter={(e) => handlePlatformMouseEnter(e, key)}
+                              onMouseEnter={(e) =>
+                                handlePlatformMouseEnter(e, key)
+                              }
                               onMouseMove={handlePlatformMouseMove}
                               onMouseLeave={handlePlatformMouseLeave}
                               data-stopdrag
@@ -317,7 +336,9 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
               onClick={(e) => e.stopPropagation()}
               className="relative bg-white dark:bg-neutral-800 immersive:bg-neutral-800 rounded-2xl shadow-xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-4 md:p-6"
             >
-              <h3 className="text-lg font-medium mb-6 text-center">All Projects</h3>
+              <h3 className="text-lg font-medium mb-6 text-center">
+                All Projects
+              </h3>
               <button
                 onClick={() => setIsShowAll(false)}
                 className="absolute top-4 right-4 p-1.5 rounded-full cursor-pointer text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 immersive:hover:bg-neutral-700 transition-colors"
@@ -340,7 +361,9 @@ export default function ProjectSlider({ theme, platformPopover, setPlatformPopov
                       className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                      <h4 className="text-xs font-medium text-white truncate">{project.title}</h4>
+                      <h4 className="text-xs font-medium text-white truncate">
+                        {project.title}
+                      </h4>
                     </div>
                   </button>
                 ))}

@@ -80,7 +80,11 @@ export default function CatModel() {
         shadow-camera-bottom={-3}
       />
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.3, 0]} receiveShadow>
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -2.3, 0]}
+        receiveShadow
+      >
         <planeGeometry args={[10, 10]} />
         <shadowMaterial opacity={0.3} />
       </mesh>

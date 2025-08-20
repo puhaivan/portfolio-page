@@ -31,19 +31,21 @@ const ProfileInfo = function ({ setPopover }) {
             </div>
 
             <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 leading-relaxed mb-3">
-              Full-stack developer &amp; creative tech enthusiast based in New York, USA.{' '}
+              Full-stack developer &amp; creative tech enthusiast based in New
+              York, USA.{' '}
               <strong className="font-medium text-black dark:text-white immersive:text-white">
                 Dedicated to collaborating
               </strong>{' '}
-              with innovative teams to build interactive, scalable web experiences.
+              with innovative teams to build interactive, scalable web
+              experiences.
             </p>
             <p className="text-sm text-neutral-700 dark:text-neutral-300 immersive:text-neutral-300 leading-relaxed mb-6">
               Currently developing{' '}
               <strong className="font-medium text-black dark:text-white immersive:text-white">
                 side projects
               </strong>{' '}
-              to expand my portfolio and showcase technical creativity. Open to international
-              contract opportunities in{' '}
+              to expand my portfolio and showcase technical creativity. Open to
+              international contract opportunities in{' '}
               <strong className="font-medium text-black dark:text-white immersive:text-white">
                 North America, Europe, and the UK
               </strong>
@@ -139,7 +141,9 @@ const ProfileInfo = function ({ setPopover }) {
                       y: e.clientY,
                     }))
                   }
-                  onMouseLeave={() => setPopover((prev) => ({ ...prev, isVisible: false }))}
+                  onMouseLeave={() =>
+                    setPopover((prev) => ({ ...prev, isVisible: false }))
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -174,9 +178,15 @@ const ProfileInfo = function ({ setPopover }) {
                     })
                   }
                   onMouseMove={(e) =>
-                    setPopover((prev) => ({ ...prev, x: e.clientX, y: e.clientY }))
+                    setPopover((prev) => ({
+                      ...prev,
+                      x: e.clientX,
+                      y: e.clientY,
+                    }))
                   }
-                  onMouseLeave={() => setPopover((prev) => ({ ...prev, isVisible: false }))}
+                  onMouseLeave={() =>
+                    setPopover((prev) => ({ ...prev, isVisible: false }))
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -210,9 +220,15 @@ const ProfileInfo = function ({ setPopover }) {
                     })
                   }
                   onMouseMove={(e) =>
-                    setPopover((prev) => ({ ...prev, x: e.clientX, y: e.clientY }))
+                    setPopover((prev) => ({
+                      ...prev,
+                      x: e.clientX,
+                      y: e.clientY,
+                    }))
                   }
-                  onMouseLeave={() => setPopover((prev) => ({ ...prev, isVisible: false }))}
+                  onMouseLeave={() =>
+                    setPopover((prev) => ({ ...prev, isVisible: false }))
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -248,9 +264,15 @@ const ProfileInfo = function ({ setPopover }) {
                     })
                   }
                   onMouseMove={(e) =>
-                    setPopover((prev) => ({ ...prev, x: e.clientX, y: e.clientY }))
+                    setPopover((prev) => ({
+                      ...prev,
+                      x: e.clientX,
+                      y: e.clientY,
+                    }))
                   }
-                  onMouseLeave={() => setPopover((prev) => ({ ...prev, isVisible: false }))}
+                  onMouseLeave={() =>
+                    setPopover((prev) => ({ ...prev, isVisible: false }))
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -15,7 +15,8 @@ export const projects = [
     year: '2025',
     url: 'https://planets-awaken.com',
     tagline: 'Interactive planetary experience',
-    description: 'Scroll through planets in a beautiful 3D interactive space journey.',
+    description:
+      'Scroll through planets in a beautiful 3D interactive space journey.',
     tech: ['TypeScript', 'Three.js', 'TailwindCSS'],
     image: '/images/planets-awaken.png',
     platforms: ['web', 'desktop', 'safari', 'chrome'],

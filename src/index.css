@@ -20,7 +20,13 @@
 }
 
 :root.immersive[data-project='0'] {
-  --bg-base: linear-gradient(132deg, #a1c4fd 0%, #d4e0ff 30%, #fbc2eb 70%, #d1a1f8 100%);
+  --bg-base: linear-gradient(
+    132deg,
+    #a1c4fd 0%,
+    #d4e0ff 30%,
+    #fbc2eb 70%,
+    #d1a1f8 100%
+  );
 }
 :root.immersive[data-project='1'] {
   --bg-base: linear-gradient(
@@ -41,7 +47,9 @@ body,
 #root {
   background: var(--bg-base);
   color: var(--text-color);
-  transition: background 0.6s ease, color 0.6s ease;
+  transition:
+    background 0.6s ease,
+    color 0.6s ease;
 
   height: 100%;
   overflow-y: scroll;
