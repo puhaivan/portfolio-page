@@ -21,4 +21,15 @@ export const projects = [
     image: '/images/planets-awaken.png',
     platforms: ['web', 'desktop', 'safari', 'chrome'],
   },
+  {
+    title: 'Swapi New Hope',
+    year: '2025',
+    url: 'https://swapi-revolution.com',
+    tagline: 'Star Wars data explorer (single-page)',
+    description:
+      'A minimalist Star Wars explorer powered by SWAPI: clean UI, and a galaxy-themed background.',
+    tech: ['React', 'Vite', 'TailwindCSS', 'SWAPI'],
+    image: '/images/swapi-revolution.png',
+    platforms: ['web', 'desktop', 'safari', 'chrome'],
+  },
 ];

@@ -88,6 +88,11 @@ export default function ProjectSlider({
     if (theme === 'immersive') {
       document.documentElement.setAttribute('data-project', currentIndex);
     }
+    if ((theme === 'immersive') & (currentIndex === 2)) {
+      document.documentElement.setAttribute('bg-sw-stars', currentIndex);
+    } else {
+      document.documentElement.removeAttribute('bg-sw-stars');
+    }
   }, [theme, currentIndex]);
 
   useEffect(() => {
