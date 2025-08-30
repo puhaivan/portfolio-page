@@ -248,7 +248,7 @@ const ProfileInfo = function ({ setPopover }) {
                 </a>
 
                 <a
-                  href="/resume.pdf"
+                  href="/Ivan_Puha_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   download="Ivan_Puha_Resume.pdf"
