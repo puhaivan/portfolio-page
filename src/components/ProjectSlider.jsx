@@ -152,9 +152,7 @@ export default function ProjectSlider({
   };
 
   return (
-    <div
-      className={`relative w-full group/nav overflow-hidden isolate ${isShowAll ? 'pointer-events-none select-none touch-none' : ''}`}
-    >
+    <div className="relative w-full group/nav overflow-hidden isolate">
       <div className="absolute left-2 md:left-4 bottom-2 md:bottom-4 z-50 opacity-0 group-hover/nav:opacity-100 transition-opacity">
         <button
           onClick={() => paginate(-1)}
