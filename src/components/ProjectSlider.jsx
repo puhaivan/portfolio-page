@@ -214,7 +214,7 @@ export default function ProjectSlider({
               initial="enter"
               animate="center"
               exit="exit"
-              drag="x"
+              drag={isShowAll ? false : 'x'}
               whileDrag={{ scale: 0.97, opacity: 0.85 }}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.2}
@@ -223,7 +223,8 @@ export default function ProjectSlider({
                 if (swipe < -100) paginate(1);
                 else if (swipe > 100) paginate(-1);
               }}
-              className="w-full cursor-grab active:cursor-grabbing z-10"
+              style={{ touchAction: isShowAll ? 'none' : 'pan-y' }}
+              className={`w-full z-10 ${isShowAll ? '' : 'cursor-grab active:cursor-grabbing'}`}
             >
               <motion.article ref={articleRef} className="w-full flex flex-col">
                 <div className="w-full h-[120px] sm:h-[120px] md:h-[160px] lg:h-[200px] overflow-hidden rounded-t-3xl shadow-lg flex items-center justify-center bg-black">
@@ -311,7 +312,11 @@ export default function ProjectSlider({
                       {currentIndex + 1} / {projects.length}
                     </span>
                     <button
-                      onClick={() => setIsShowAll(true)}
+                      onPointerDown={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsShowAll(true);
+                      }}
                       className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 immersive:hover:bg-white/10 cursor-pointer"
                       aria-label="Show all projects"
                     >
