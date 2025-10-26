@@ -331,7 +331,9 @@ export default function ProjectSlider({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsShowAll(false)}
+            onClick={(e) => {
+              if (e.currentTarget === e.target) setIsShowAll(false);
+            }}
             className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4"
           >
             <motion.div
@@ -339,23 +341,32 @@ export default function ProjectSlider({
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white dark:bg-neutral-800 immersive:bg-neutral-800 rounded-2xl shadow-xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-4 md:p-6"
+              onPointerDown={(e) => e.stopPropagation()}
+              className="relative bg-white dark:bg-neutral-800 immersive:bg-neutral-800 rounded-2xl shadow-xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-4 md:p-6 pointer-events-auto"
             >
               <h3 className="text-lg font-medium mb-6 text-center">
                 All Projects
               </h3>
+
               <button
+                type="button"
                 onClick={() => setIsShowAll(false)}
                 className="absolute top-4 right-4 p-1.5 rounded-full cursor-pointer text-neutral-500 dark:text-neutral-400 immersive:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 immersive:hover:bg-neutral-700 transition-colors"
                 aria-label="Close project overview"
               >
                 <X className="w-5 h-5" />
               </button>
+
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {projects.map((project, index) => (
                   <button
                     key={project.title}
-                    onClick={() => goToIndex(index)}
+                    type="button"
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onPointerUp={(e) => {
+                      e.stopPropagation();
+                      goToIndex(index);
+                    }}
                     className={`relative group block w-full aspect-square rounded-lg overflow-hidden hover:scale-[1.02] cursor-pointer ${
                       currentIndex === index ? 'ring-2 ring-sky-500' : ''
                     }`}
@@ -363,6 +374,7 @@ export default function ProjectSlider({
                     <img
                       src={project.image}
                       alt={project.title}
+                      draggable={false}
                       className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
