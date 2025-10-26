@@ -88,7 +88,7 @@ export default function ProjectSlider({
     if (theme === 'immersive') {
       document.documentElement.setAttribute('data-project', currentIndex);
     }
-    if ((theme === 'immersive') & (currentIndex === 2)) {
+    if (theme === 'immersive' && currentIndex === 2) {
       document.documentElement.setAttribute('bg-sw-stars', currentIndex);
     } else {
       document.documentElement.removeAttribute('bg-sw-stars');
@@ -124,8 +124,18 @@ export default function ProjectSlider({
   const handlePlatformMouseLeave = () =>
     setPlatformPopover((p) => ({ ...p, isVisible: false }));
 
+  const openIndexRef = useRef(0);
+
+  const openAllProjects = () => {
+    openIndexRef.current = currentIndex; // freeze current slide
+    setIsShowAll(true);
+  };
+
   const goToIndex = (index) => {
-    if (index === currentIndex) {
+    const from = openIndexRef.current ?? currentIndex;
+
+    if (index === from) {
+      // only close if user tapped the same card they were on
       setIsShowAll(false);
       return;
     }
@@ -136,13 +146,15 @@ export default function ProjectSlider({
     }
 
     setIsTransitioning(true);
-    setDirection(index > currentIndex ? 1 : -1);
+    setDirection(index > from ? 1 : -1);
     setCurrentIndex(index);
     setIsShowAll(false);
   };
 
   return (
-    <div className="relative w-full group/nav overflow-hidden isolate">
+    <div
+      className={`relative w-full group/nav overflow-hidden isolate ${isShowAll ? 'pointer-events-none select-none touch-none' : ''}`}
+    >
       <div className="absolute left-2 md:left-4 bottom-2 md:bottom-4 z-50 opacity-0 group-hover/nav:opacity-100 transition-opacity">
         <button
           onClick={() => paginate(-1)}
@@ -315,7 +327,7 @@ export default function ProjectSlider({
                       onPointerDown={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setIsShowAll(true);
+                        openAllProjects();
                       }}
                       className="p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10 immersive:hover:bg-white/10 cursor-pointer"
                       aria-label="Show all projects"
@@ -336,7 +348,7 @@ export default function ProjectSlider({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={(e) => {
+            onPointerDown={(e) => {
               if (e.currentTarget === e.target) setIsShowAll(false);
             }}
             className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4"
@@ -368,7 +380,13 @@ export default function ProjectSlider({
                     key={project.title}
                     type="button"
                     onPointerDown={(e) => e.stopPropagation()}
-                    onPointerUp={(e) => {
+                    onPointerUp={(e) => e.stopPropagation()}
+                    onTouchEnd={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      goToIndex(index);
+                    }}
+                    onClick={(e) => {
                       e.stopPropagation();
                       goToIndex(index);
                     }}
@@ -380,7 +398,7 @@ export default function ProjectSlider({
                       src={project.image}
                       alt={project.title}
                       draggable={false}
-                      className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform"
+                      className="w-full h-full object-cover object-right group-hover:scale-105 transition-transform pointer-events-none"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
                       <h4 className="text-xs font-medium text-white truncate">
